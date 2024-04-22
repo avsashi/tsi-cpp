@@ -1,15 +1,10 @@
 /*
- * Copyright (C) ActiveViam 2023
+ * Copyright (C) ActiveViam 2023-2024
  * ALL RIGHTS RESERVED. This material is the CONFIDENTIAL and PROPRIETARY
  * property of ActiveViam Limited. Any unauthorized use,
  * reproduction or transfer of this material is strictly prohibited
  */
 package com.activeviam.apps.cfg.pivot;
-
-import static com.activeviam.apps.constants.StoreAndFieldConstants.TRADES_NOTIONAL;
-import static com.activeviam.apps.constants.StoreAndFieldConstants.TRADES_STORE_NAME;
-
-import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -21,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.activeviam.apps.cfg.DatastoreSchemaConfig;
 import com.activeviam.apps.cfg.DatastoreSelectionConfig;
+import com.activeviam.apps.constants.StoreAndFieldConstants;
 import com.activeviam.builders.StartBuilding;
 import com.activeviam.copper.CopperRegistrations;
 import com.activeviam.copper.builders.ITransactionsBuilder;
@@ -53,21 +49,6 @@ class MeasuresTest {
                 .printCellSet();
     }
 
-    @Test
-    void tradesNotionalTotal_test() {
-        SimpleTransactionBuilder.start()
-                .inStore(TRADES_STORE_NAME)
-                .add(LocalDate.parse("2019-03-13"), "T4", 400d)
-                .end()
-                .feedInto(tester.datastore());
-        tester.query()
-                .forMeasures(TRADES_NOTIONAL)
-                .run()
-                .show()
-                .getTester()
-                .hasOnlyOneCellWith()
-                .containing(1150d);
-    }
 
     /**
      * NOTE: in this test, we setup the cube and load the data once. We then create a Tester as a bean and reuse it
@@ -97,10 +78,7 @@ class MeasuresTest {
 
         public static ITransactionsBuilder createTestData() {
             return SimpleTransactionBuilder.start()
-                    .inStore(TRADES_STORE_NAME)
-                    .add(LocalDate.parse("2019-03-13"), "T1", 100d)
-                    .add(LocalDate.parse("2019-03-13"), "T2", 350d)
-                    .add(LocalDate.parse("2019-03-13"), "T3", 300d)
+                    .inStore(StoreAndFieldConstants.POSITIONS)
                     .end();
         }
 

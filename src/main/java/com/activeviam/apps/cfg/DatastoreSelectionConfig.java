@@ -1,5 +1,5 @@
 /*
- * Copyright (C) ActiveViam 2023
+ * Copyright (C) ActiveViam 2023-2024
  * ALL RIGHTS RESERVED. This material is the CONFIDENTIAL and PROPRIETARY
  * property of ActiveViam Limited. Any unauthorized use,
  * reproduction or transfer of this material is strictly prohibited
@@ -26,8 +26,11 @@ public class DatastoreSelectionConfig {
      * @return The created selection description
      */
     public ISelectionDescription createSchemaSelectionDescription() {
-        return StartBuilding.selection(datastoreSchemaConfig.datastoreSchemaDescription())
-                .fromBaseStore(StoreAndFieldConstants.TRADES_STORE_NAME)
+        return StartBuilding
+                .selection(datastoreSchemaConfig.datastoreSchemaDescription())
+                .fromBaseStore(StoreAndFieldConstants.POSITIONS)
+                .withAllFields()
+                .usingReference("PositionsToCcp")
                 .withAllFields()
                 .build();
     }

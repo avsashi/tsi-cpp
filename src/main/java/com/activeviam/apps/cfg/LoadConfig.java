@@ -1,12 +1,14 @@
 /*
- * Copyright (C) ActiveViam 2023
+ * Copyright (C) ActiveViam 2023-2024
  * ALL RIGHTS RESERVED. This material is the CONFIDENTIAL and PROPRIETARY
  * property of ActiveViam Limited. Any unauthorized use,
  * reproduction or transfer of this material is strictly prohibited
  */
 package com.activeviam.apps.cfg;
 
-import static com.activeviam.apps.cfg.SourceConfig.TRADES_TOPIC;
+import static com.activeviam.apps.cfg.SourceConfig.CCP_TOPIC;
+import static com.activeviam.apps.cfg.SourceConfig.POSITIONS_TOPIC;
+import static com.activeviam.apps.cfg.SourceConfig.VAR_TOPIC;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -58,7 +60,9 @@ public class LoadConfig {
     private void initialLoad() throws Exception {
         log.info("Initial data load started.");
         final Collection<IMessageChannel<IFileInfo<Path>, ILineReader>> csvChannels = new ArrayList<>();
-        csvChannels.add(csvChannelFactory.createChannel(TRADES_TOPIC, StoreAndFieldConstants.TRADES_STORE_NAME));
+        csvChannels.add(csvChannelFactory.createChannel(POSITIONS_TOPIC, StoreAndFieldConstants.POSITIONS));
+        csvChannels.add(csvChannelFactory.createChannel(VAR_TOPIC, StoreAndFieldConstants.VAR));
+        csvChannels.add(csvChannelFactory.createChannel(CCP_TOPIC, StoreAndFieldConstants.CCP));
 
         // do the transactions
         final var before = System.nanoTime();

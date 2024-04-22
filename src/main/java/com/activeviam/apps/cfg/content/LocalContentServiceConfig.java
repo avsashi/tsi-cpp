@@ -1,5 +1,5 @@
 /*
- * Copyright (C) ActiveViam 2023
+ * Copyright (C) ActiveViam 2023-2024
  * ALL RIGHTS RESERVED. This material is the CONFIDENTIAL and PROPRIETARY
  * property of ActiveViam Limited. Any unauthorized use,
  * reproduction or transfer of this material is strictly prohibited
@@ -63,9 +63,7 @@ public class LocalContentServiceConfig implements IActivePivotContentServiceConf
                 .withCacheForEntitlements(contentServiceSecurityProperties
                         .getCacheEntitlementsTtl()
                         .toSeconds())
-                .needInitialization(
-                        contentServiceSecurityProperties.getCalculatedMemberRole(),
-                        contentServiceSecurityProperties.getKpiRole())
+                .needInitialization("ROLE_USER", "ROLE_USER")
                 .build();
     }
 }

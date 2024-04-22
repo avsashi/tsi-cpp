@@ -30,7 +30,9 @@ schema:
 
 # File to parse
 file:
-  trades: "data/trades.csv"
+  positions: "data/positions.csv"
+  ccp: "data/ccp.csv"
+  var: "data/var.csv"
 
 tech-user:
   passwords:
